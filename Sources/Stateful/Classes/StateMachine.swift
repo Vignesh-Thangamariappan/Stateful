@@ -45,6 +45,10 @@ open class StateMachine<State: Hashable, Event: Hashable> {
         }
     }
     
+    public func add(transitions: [Transition<State, Event>]) {
+        transitions.forEach({ add(transition: $0) })
+    }
+    
     public func process(event: Event, execution: (() -> Void)? = nil, callback: TransitionBlock? = nil) {
         var transitions: [Transition<State, Event>]?
         lockQueue.sync {
